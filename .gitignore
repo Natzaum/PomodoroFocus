@@ -1,2 +1,17 @@
-*.config
-*.vscode
+# Diretórios de configuração/editor
+.vscode/
+.config/
+
+# Saídas de build .NET/MAUI
+bin/
+obj/
+
+# Visual Studio / JetBrains
+.vs/
+.idea/
+
+# Arquivos específicos de usuário
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
