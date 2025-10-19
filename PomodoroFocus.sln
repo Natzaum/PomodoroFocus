@@ -5,10 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomodoroFocus", "PomodoroFocus\PomodoroFocus.csproj", "{9EA1449B-8C17-465A-A787-783CA2750238}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomodoroFocus.Tests", "PomodoroFocus.Tests\PomodoroFocus.Tests.csproj", "{592F1F08-4CE1-40E2-B105-0F577D74D47E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PomodoroFocus.Models", "PomodoroFocus.Models\PomodoroFocus.Models.csproj", "{3BA13B4E-C694-41B8-9242-F29C9CCE0EEE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

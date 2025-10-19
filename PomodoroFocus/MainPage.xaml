@@ -4,22 +4,99 @@
              x:Class="PomodoroFocus.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <Grid RowDefinitions="Auto, *" Padding="24">
-        <VerticalStackLayout Spacing="16" HorizontalOptions="Center" VerticalOptions="Center">
-            <Border StrokeThickness="2" Stroke="{DynamicResource Primary}" Background="Transparent" Padding="24" StrokeShape="RoundRectangle 20,20,20,20">
-                <Label Text="{Binding RemainingTimeFormatted}"
-                       FontSize="64"
-                       HorizontalTextAlignment="Center"
-                       TextColor="{DynamicResource PrimaryText}"
-                       FontAttributes="Bold" />
-            </Border>
+    <Grid RowDefinitions="*,Auto,*" ColumnDefinitions="*,Auto,*" BackgroundColor="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}">
+        <ContentView Grid.Row="1" Grid.Column="1" Padding="0,40" >
+            <VerticalStackLayout Spacing="32" HorizontalOptions="Center" VerticalOptions="Center">
+                <!-- Tabs de modo -->
+                <HorizontalStackLayout Spacing="0" HorizontalOptions="Center" Margin="0,0,0,16">
+                    <Button Text="Pomodoro" 
+                            Command="{Binding SelectPomodoroCommand}" 
+                            BackgroundColor="{Binding PomodoroTabBackground}" 
+                            TextColor="{Binding PomodoroTabTextColor}"
+                            Padding="16,8"
+                            CornerRadius="8"
+                            Margin="2"
+                            Opacity="0.9" />
+                    <Button Text="Short Break" 
+                            Command="{Binding SelectShortBreakCommand}" 
+                            BackgroundColor="{Binding ShortBreakTabBackground}" 
+                            TextColor="{Binding ShortBreakTabTextColor}"
+                            Padding="16,8"
+                            CornerRadius="8"
+                            Margin="2"
+                            Opacity="0.9" />
+                    <Button Text="Long Break" 
+                            Command="{Binding SelectLongBreakCommand}" 
+                            BackgroundColor="{Binding LongBreakTabBackground}" 
+                            TextColor="{Binding LongBreakTabTextColor}"
+                            Padding="16,8"
+                            CornerRadius="8"
+                            Margin="2"
+                            Opacity="0.9" />
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
-                <Button Text="Iniciar" Command="{Binding StartCommand}" StyleClass="PrimaryAction" />
-                <Button Text="Pausar" Command="{Binding PauseCommand}" />
-                <Button Text="Resetar" Command="{Binding ResetCommand}" />
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+                <!-- Card do timer -->
+                <Border Background="{Binding TimerCardColor, Converter={StaticResource ColorResourceConverter}}"
+                        StrokeThickness="0"
+                        Padding="32,24"
+                        StrokeShape="RoundRectangle 20,20,20,20">
+                    <Border.Shadow>
+                        <Shadow Radius="20" Opacity="0.2" Offset="0,8" />
+                    </Border.Shadow>
+                    <Label Text="{Binding RemainingTimeFormatted}"
+                           FontSize="72"
+                           HorizontalTextAlignment="Center"
+                           TextColor="{Binding TimerTextColor, Converter={StaticResource ColorResourceConverter}}"
+                           FontAttributes="Bold" />
+                </Border>
+
+        <!-- Botão START/PAUSE -->
+        <Button Text="START"
+            Command="{Binding StartCommand}"
+            FontSize="24"
+            FontAttributes="Bold"
+            BackgroundColor="White"
+            TextColor="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}"
+            CornerRadius="12"
+            Padding="32,8"
+            Margin="0,24,0,0"
+            IsVisible="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}" />
+        <Button Text="PAUSE"
+            Command="{Binding PauseCommand}"
+            FontSize="24"
+            FontAttributes="Bold"
+            BackgroundColor="White"
+            TextColor="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}"
+            CornerRadius="12"
+            Padding="32,8"
+            Margin="0,24,0,0"
+            IsVisible="{Binding IsRunning}" />
+
+        <!-- Botões Reset e Skip -->
+        <HorizontalStackLayout Spacing="16" HorizontalOptions="Center" Margin="0,8,0,0">
+            <Button Text="Reset"
+                Command="{Binding ResetCommand}"
+                FontSize="16"
+                BackgroundColor="White"
+                TextColor="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}"
+                CornerRadius="8"
+                Padding="20,6"
+                IsVisible="True" />
+                    <Border Background="White" HeightRequest="44" WidthRequest="44" StrokeThickness="0" StrokeShape="RoundRectangle 22,22,22,22">
+                        <Grid Padding="10">
+                            <Path Data="M5 12 H19 M12 5 L19 12 L12 19"
+                                  StrokeThickness="2"
+                                  StrokeLineJoin="Round"
+                                  StrokeLineCap="Round"
+                                  Stroke="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}" />
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SkipCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+        </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </ContentView>
     </Grid>
 
 </ContentPage>

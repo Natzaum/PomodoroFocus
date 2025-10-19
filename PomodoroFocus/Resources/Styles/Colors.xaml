@@ -4,6 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <Color x:Key="PomodoroRed">#FF5722</Color>
+    <Color x:Key="PomodoroRedCard">#FF972300</Color>
+    <Color x:Key="BreakBlue">#1976D2</Color>
+    <Color x:Key="BreakBlueCard">#0D47A1</Color>
+    <SolidColorBrush x:Key="PomodoroRedBrush" Color="{StaticResource PomodoroRed}"/>
+    <SolidColorBrush x:Key="BreakBlueBrush" Color="{StaticResource BreakBlue}"/>
+
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
     <Color x:Key="Primary">#512BD4</Color>
