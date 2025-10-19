@@ -15,3 +15,11 @@ obj/
 *.userosscache
 *.suo
 *.sln.docstates
+
+# Testes e cobertura
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
