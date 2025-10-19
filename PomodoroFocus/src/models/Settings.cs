@@ -1,5 +1,7 @@
 using SQLite;
 
+namespace PomodoroFocus;
+
 public class Settings
 {
     [PrimaryKey, AutoIncrement]

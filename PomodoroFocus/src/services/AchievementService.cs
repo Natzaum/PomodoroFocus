@@ -1,3 +1,5 @@
+namespace PomodoroFocus;
+
 public class AchievementService
 {
     private readonly DatabaseService _db;

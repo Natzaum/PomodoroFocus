@@ -1,5 +1,7 @@
 using System.Windows.Input;
 
+namespace PomodoroFocus;
+
 public class HomeViewModel : BaseViewModel
 {
     public string TimerBackgroundColor =>
@@ -19,8 +21,22 @@ public class HomeViewModel : BaseViewModel
     
     public string LongBreakTabBackground => CurrentState == "long_break" ? "BreakBlueCard" : "Transparent";
     public string LongBreakTabTextColor => CurrentState == "long_break" ? "White" : "White";
+    
+    private double _buttonOpacity = 1.0;
+    public double ButtonOpacity
+    {
+        get => _buttonOpacity;
+        set
+        {
+            if (Math.Abs(_buttonOpacity - value) < 0.01) return;
+            _buttonOpacity = value;
+            OnPropertyChanged();
+        }
+    }
+    
     private readonly PomodoroService _pomodoroService;
-    private int _remainingTime = 25 * 60;
+    private readonly SoundService _soundService;
+    private int _remainingTime = 25 * 60; // Tempo inicial: 25 minutos (25 * 60 segundos)
     private string _currentState = "focus";
     private bool _isRunning;
 
@@ -70,6 +86,8 @@ public class HomeViewModel : BaseViewModel
     }
 
     public bool CanPause => IsRunning;
+    
+    public string PomodoroProgress => $"{_pomodoroService.CompletedPomodoros}/{_pomodoroService.PomodorosUntilLongBreak}";
 
     public ICommand StartCommand { get; }
     public ICommand PauseCommand { get; }
@@ -79,9 +97,10 @@ public class HomeViewModel : BaseViewModel
     public ICommand SelectShortBreakCommand { get; }
     public ICommand SelectLongBreakCommand { get; }
 
-    public HomeViewModel(PomodoroService pomodoroService)
+    public HomeViewModel(PomodoroService pomodoroService, SoundService soundService)
     {
         _pomodoroService = pomodoroService;
+        _soundService = soundService;
         StartCommand = new Command(StartTimer);
         PauseCommand = new Command(PauseTimer);
         ResetCommand = new Command(ResetTimer);
@@ -91,29 +110,74 @@ public class HomeViewModel : BaseViewModel
         SelectLongBreakCommand = new Command(SelectLongBreak);
     }
 
-    private void StartTimer() => _pomodoroService.Start(this);
-    private void PauseTimer() => _pomodoroService.Pause(this);
-    private void ResetTimer() => _pomodoroService.Reset(this);
-    private void Skip() => _pomodoroService.SkipToNext(this);
+    private void StartTimer()
+    {
+        System.Diagnostics.Debug.WriteLine("StartTimer chamado!");
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
+        _pomodoroService.Start(this);
+    }
+
+    private void PauseTimer()
+    {
+        System.Diagnostics.Debug.WriteLine("PauseTimer chamado!");
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
+        _pomodoroService.Pause(this);
+    }
+
+    private void ResetTimer()
+    {
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
+        _pomodoroService.Reset(this);
+    }
+    
+    private void Skip()
+    {
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
+        _pomodoroService.SkipToNext(this);
+    }
 
     private void SelectPomodoro()
     {
         if (IsRunning) return; // Não permite trocar enquanto está rodando
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
         CurrentState = "focus";
-        RemainingTime = 25 * 60;
+        RemainingTime = 25 * 60; // Tempo de teste: 5 segundos (normal: 25 * 60)
     }
 
     private void SelectShortBreak()
     {
         if (IsRunning) return;
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
         CurrentState = "short_break";
-        RemainingTime = 5 * 60;
+        RemainingTime = 5 * 60; // Tempo de teste: 5 segundos (normal: 5 * 60)
     }
 
     private void SelectLongBreak()
     {
         if (IsRunning) return;
+        AnimateButtonPress();
+        _soundService.PlayClickSound();
         CurrentState = "long_break";
-        RemainingTime = 15 * 60;
+        RemainingTime = 15 * 60; // Tempo de teste: 15 segundos (normal: 15 * 60)
+    }
+    
+    public void UpdatePomodoroProgress()
+    {
+        OnPropertyChanged(nameof(PomodoroProgress));
+    }
+    
+    private async void AnimateButtonPress()
+    {
+        // Escurece o botão
+        ButtonOpacity = 0.5;
+        await Task.Delay(100);
+        // Volta ao normal
+        ButtonOpacity = 1.0;
     }
 }

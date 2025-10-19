@@ -1,5 +1,7 @@
 using SQLite;
 
+namespace PomodoroFocus;
+
 public class DatabaseService
 {
     private readonly SQLiteAsyncConnection _database;

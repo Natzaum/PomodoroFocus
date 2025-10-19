@@ -21,4 +21,16 @@ public partial class MainPage : ContentPage
             throw;
         }
     }
+
+    private async void OnButtonPressed(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            System.Diagnostics.Debug.WriteLine($"Botão pressionado: {button.Text}");
+            // Escurece o botão
+            await button.FadeTo(0.5, 100);
+            // Volta ao normal
+            await button.FadeTo(1.0, 100);
+        }
+    }
 }

@@ -16,7 +16,8 @@
                             Padding="16,8"
                             CornerRadius="8"
                             Margin="2"
-                            Opacity="0.9" />
+                            Opacity="0.9"
+                            Pressed="OnButtonPressed" />
                     <Button Text="Short Break" 
                             Command="{Binding SelectShortBreakCommand}" 
                             BackgroundColor="{Binding ShortBreakTabBackground}" 
@@ -24,7 +25,8 @@
                             Padding="16,8"
                             CornerRadius="8"
                             Margin="2"
-                            Opacity="0.9" />
+                            Opacity="0.9"
+                            Pressed="OnButtonPressed" />
                     <Button Text="Long Break" 
                             Command="{Binding SelectLongBreakCommand}" 
                             BackgroundColor="{Binding LongBreakTabBackground}" 
@@ -32,8 +34,17 @@
                             Padding="16,8"
                             CornerRadius="8"
                             Margin="2"
-                            Opacity="0.9" />
+                            Opacity="0.9"
+                            Pressed="OnButtonPressed" />
                 </HorizontalStackLayout>
+
+                <!-- Indicador de progresso dos pomodoros -->
+                <Label Text="{Binding PomodoroProgress, StringFormat='Ciclo: {0}'}"
+                       FontSize="14"
+                       TextColor="White"
+                       HorizontalTextAlignment="Center"
+                       Opacity="0.8"
+                       Margin="0,-8,0,8" />
 
                 <!-- Card do timer -->
                 <Border Background="{Binding TimerCardColor, Converter={StaticResource ColorResourceConverter}}"
@@ -60,7 +71,8 @@
             CornerRadius="12"
             Padding="32,8"
             Margin="0,24,0,0"
-            IsVisible="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}" />
+            IsVisible="{Binding IsRunning, Converter={StaticResource InverseBoolConverter}}"
+            Pressed="OnButtonPressed" />
         <Button Text="PAUSE"
             Command="{Binding PauseCommand}"
             FontSize="24"
@@ -70,7 +82,8 @@
             CornerRadius="12"
             Padding="32,8"
             Margin="0,24,0,0"
-            IsVisible="{Binding IsRunning}" />
+            IsVisible="{Binding IsRunning}"
+            Pressed="OnButtonPressed" />
 
         <!-- Botões Reset e Skip -->
         <HorizontalStackLayout Spacing="16" HorizontalOptions="Center" Margin="0,8,0,0">
@@ -81,7 +94,8 @@
                 TextColor="{Binding TimerBackgroundColor, Converter={StaticResource ColorResourceConverter}}"
                 CornerRadius="8"
                 Padding="20,6"
-                IsVisible="True" />
+                IsVisible="True"
+                Pressed="OnButtonPressed" />
                     <Border Background="White" HeightRequest="44" WidthRequest="44" StrokeThickness="0" StrokeShape="RoundRectangle 22,22,22,22">
                         <Grid Padding="10">
                             <Path Data="M5 12 H19 M12 5 L19 12 L12 19"
