@@ -18,16 +18,10 @@ public static class MauiProgram
 					fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				});
 
-			// DI de serviços
-			builder.Services.AddSingleton<DatabaseService>(sp =>
-			{
-				string dbPath = Path.Combine(FileSystem.AppDataDirectory, "pomodoro.db3");
-				return new DatabaseService(dbPath);
-			});
-			builder.Services.AddSingleton<AchievementService>();
-			builder.Services.AddSingleton<PomodoroService>();
-			builder.Services.AddSingleton<SoundService>();
-			builder.Services.AddSingleton<HomeViewModel>();
+		builder.Services.AddSingleton<AchievementService>();
+		builder.Services.AddSingleton<PomodoroService>();
+		builder.Services.AddSingleton<SoundService>();
+		builder.Services.AddSingleton<HomeViewModel>();
 
 #if DEBUG
 			builder.Logging.AddDebug();

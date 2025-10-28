@@ -12,7 +12,6 @@ public class HomeViewModel : BaseViewModel
 
     public string TimerTextColor => "White";
 
-    // Tab colors for mode selection
     public string PomodoroTabBackground => CurrentState == "focus" ? "PomodoroRedCard" : "Transparent";
     public string PomodoroTabTextColor => CurrentState == "focus" ? "White" : "White";
     
@@ -36,7 +35,7 @@ public class HomeViewModel : BaseViewModel
     
     private readonly PomodoroService _pomodoroService;
     private readonly SoundService _soundService;
-    private int _remainingTime = 25 * 60; // Tempo inicial: 25 minutos (25 * 60 segundos)
+    private int _remainingTime = 25 * 60;
     private string _currentState = "focus";
     private bool _isRunning;
 
@@ -142,11 +141,11 @@ public class HomeViewModel : BaseViewModel
 
     private void SelectPomodoro()
     {
-        if (IsRunning) return; // Não permite trocar enquanto está rodando
+        if (IsRunning) return;
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "focus";
-        RemainingTime = 25 * 60; // Tempo de teste: 5 segundos (normal: 25 * 60)
+        RemainingTime = 25 * 60;
     }
 
     private void SelectShortBreak()
@@ -155,7 +154,7 @@ public class HomeViewModel : BaseViewModel
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "short_break";
-        RemainingTime = 5 * 60; // Tempo de teste: 5 segundos (normal: 5 * 60)
+        RemainingTime = 5 * 60;
     }
 
     private void SelectLongBreak()
@@ -164,7 +163,7 @@ public class HomeViewModel : BaseViewModel
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "long_break";
-        RemainingTime = 15 * 60; // Tempo de teste: 15 segundos (normal: 15 * 60)
+        RemainingTime = 15 * 60;
     }
     
     public void UpdatePomodoroProgress()
@@ -174,10 +173,8 @@ public class HomeViewModel : BaseViewModel
     
     private async void AnimateButtonPress()
     {
-        // Escurece o botão
         ButtonOpacity = 0.5;
         await Task.Delay(100);
-        // Volta ao normal
         ButtonOpacity = 1.0;
     }
 }
