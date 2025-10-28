@@ -35,7 +35,8 @@ public class HomeViewModel : BaseViewModel
     
     private readonly PomodoroService _pomodoroService;
     private readonly SoundService _soundService;
-    private int _remainingTime = 25 * 60;
+    private readonly SettingsService _settingsService;
+    private int _remainingTime;
     private string _currentState = "focus";
     private bool _isRunning;
 
@@ -96,10 +97,12 @@ public class HomeViewModel : BaseViewModel
     public ICommand SelectShortBreakCommand { get; }
     public ICommand SelectLongBreakCommand { get; }
 
-    public HomeViewModel(PomodoroService pomodoroService, SoundService soundService)
+    public HomeViewModel(PomodoroService pomodoroService, SoundService soundService, SettingsService settingsService)
     {
         _pomodoroService = pomodoroService;
         _soundService = soundService;
+        _settingsService = settingsService;
+        _remainingTime = _settingsService.GetFocusSeconds();
         StartCommand = new Command(StartTimer);
         PauseCommand = new Command(PauseTimer);
         ResetCommand = new Command(ResetTimer);
@@ -145,7 +148,7 @@ public class HomeViewModel : BaseViewModel
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "focus";
-        RemainingTime = 25 * 60;
+        RemainingTime = _settingsService.GetFocusSeconds();
     }
 
     private void SelectShortBreak()
@@ -154,7 +157,7 @@ public class HomeViewModel : BaseViewModel
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "short_break";
-        RemainingTime = 5 * 60;
+        RemainingTime = _settingsService.GetShortBreakSeconds();
     }
 
     private void SelectLongBreak()
@@ -163,7 +166,7 @@ public class HomeViewModel : BaseViewModel
         AnimateButtonPress();
         _soundService.PlayClickSound();
         CurrentState = "long_break";
-        RemainingTime = 15 * 60;
+        RemainingTime = _settingsService.GetLongBreakSeconds();
     }
     
     public void UpdatePomodoroProgress()

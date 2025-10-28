@@ -4,30 +4,32 @@ namespace PomodoroFocus;
 
 public class PomodoroService
 {
-    private const int FOCUS_TIME = 25 * 60;
-    private const int SHORT_BREAK_TIME = 5 * 60;
-    private const int LONG_BREAK_TIME = 15 * 60;
-    
     private System.Timers.Timer? _timer;
     private int _secondsRemaining;
     private readonly AchievementService _achievements;
+    private readonly SettingsService _settingsService;
     private int _completedPomodoros = 0;
     private const int POMODOROS_UNTIL_LONG_BREAK = 4;
 
     public int CompletedPomodoros => _completedPomodoros;
     public int PomodorosUntilLongBreak => POMODOROS_UNTIL_LONG_BREAK;
 
-    public PomodoroService(AchievementService achievements)
+    public PomodoroService(AchievementService achievements, SettingsService settingsService)
     {
         _achievements = achievements;
+        _settingsService = settingsService;
     }
+
+    private int GetFocusTime() => _settingsService.GetFocusSeconds();
+    private int GetShortBreakTime() => _settingsService.GetShortBreakSeconds();
+    private int GetLongBreakTime() => _settingsService.GetLongBreakSeconds();
 
     public void Start(HomeViewModel vm)
     {
         _timer?.Stop();
         _timer?.Dispose();
 
-        _secondsRemaining = vm.RemainingTime > 0 ? vm.RemainingTime : FOCUS_TIME;
+        _secondsRemaining = vm.RemainingTime > 0 ? vm.RemainingTime : GetFocusTime();
         _timer = new System.Timers.Timer(1000) { AutoReset = true };
         _timer.Elapsed += (s, e) => Tick(vm);
         _timer.Start();
@@ -69,22 +71,22 @@ public class PomodoroService
             if (_completedPomodoros >= POMODOROS_UNTIL_LONG_BREAK)
             {
                 nextState = "long_break";
-                nextSeconds = LONG_BREAK_TIME;
+                nextSeconds = GetLongBreakTime();
                 _completedPomodoros = 0;
-                System.Diagnostics.Debug.WriteLine($"Preparando pausa longa ({LONG_BREAK_TIME} seg) - aguardando START do usuário");
+                System.Diagnostics.Debug.WriteLine($"Preparando pausa longa ({nextSeconds} seg) - aguardando START do usuário");
             }
             else
             {
                 nextState = "short_break";
-                nextSeconds = SHORT_BREAK_TIME;
-                System.Diagnostics.Debug.WriteLine($"Preparando pausa curta ({SHORT_BREAK_TIME} seg). Faltam {POMODOROS_UNTIL_LONG_BREAK - _completedPomodoros} pomodoros para pausa longa - aguardando START do usuário");
+                nextSeconds = GetShortBreakTime();
+                System.Diagnostics.Debug.WriteLine($"Preparando pausa curta ({nextSeconds} seg). Faltam {POMODOROS_UNTIL_LONG_BREAK - _completedPomodoros} pomodoros para pausa longa - aguardando START do usuário");
             }
         }
         else
         {
             nextState = "focus";
-            nextSeconds = FOCUS_TIME;
-            System.Diagnostics.Debug.WriteLine($"Preparando sessão de foco ({FOCUS_TIME} seg) - aguardando START do usuário");
+            nextSeconds = GetFocusTime();
+            System.Diagnostics.Debug.WriteLine($"Preparando sessão de foco ({nextSeconds} seg) - aguardando START do usuário");
         }
 
         vm.CurrentState = nextState;
@@ -102,11 +104,11 @@ public class PomodoroService
         _timer?.Stop();
         _timer?.Dispose();
         _timer = null;
-        int defaultSeconds = FOCUS_TIME;
+        int defaultSeconds = GetFocusTime();
         if (string.Equals(vm.CurrentState, "short_break", StringComparison.OrdinalIgnoreCase))
-            defaultSeconds = SHORT_BREAK_TIME;
+            defaultSeconds = GetShortBreakTime();
         else if (string.Equals(vm.CurrentState, "long_break", StringComparison.OrdinalIgnoreCase))
-            defaultSeconds = LONG_BREAK_TIME;
+            defaultSeconds = GetLongBreakTime();
         _secondsRemaining = defaultSeconds;
         vm.RemainingTime = defaultSeconds;
         vm.IsRunning = false;

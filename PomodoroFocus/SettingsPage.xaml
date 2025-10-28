@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PomodoroFocus.SettingsPage"
+             Title="Configurações"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,40" Spacing="35">
+            <Label Text="Configurações de Tempo"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Start"
+                   Margin="0,0,0,10" />
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Tempo de Foco"
+                       FontSize="14"
+                       TextColor="#666666"
+                       Margin="0,0,0,8" />
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Start">
+                    <Button Text="-"
+                            Command="{Binding DecrementFocusCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Border BackgroundColor="#F8F8F8"
+                            StrokeThickness="1"
+                            Stroke="#DDDDDD"
+                            StrokeShape="RoundRectangle 8"
+                            Padding="15,0">
+                        <Entry Text="{Binding FocusMinutes}"
+                               Keyboard="Numeric"
+                               HorizontalTextAlignment="Center"
+                               FontSize="24"
+                               TextColor="#222222"
+                               WidthRequest="100"
+                               HeightRequest="45"
+                               BackgroundColor="Transparent" />
+                    </Border>
+                    <Button Text="+"
+                            Command="{Binding IncrementFocusCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Label Text="minutos"
+                           FontSize="14"
+                           TextColor="#666666"
+                           VerticalOptions="Center"
+                           Margin="8,0,0,0" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5" />
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Pausa Curta"
+                       FontSize="14"
+                       TextColor="#666666"
+                       Margin="0,0,0,8" />
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Start">
+                    <Button Text="-"
+                            Command="{Binding DecrementShortBreakCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Border BackgroundColor="#F8F8F8"
+                            StrokeThickness="1"
+                            Stroke="#DDDDDD"
+                            StrokeShape="RoundRectangle 8"
+                            Padding="15,0">
+                        <Entry Text="{Binding ShortBreakMinutes}"
+                               Keyboard="Numeric"
+                               HorizontalTextAlignment="Center"
+                               FontSize="24"
+                               TextColor="#222222"
+                               WidthRequest="100"
+                               HeightRequest="45"
+                               BackgroundColor="Transparent" />
+                    </Border>
+                    <Button Text="+"
+                            Command="{Binding IncrementShortBreakCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Label Text="minutos"
+                           FontSize="14"
+                           TextColor="#666666"
+                           VerticalOptions="Center"
+                           Margin="8,0,0,0" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="1" Color="#E0E0E0" Margin="0,5" />
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Pausa Longa"
+                       FontSize="14"
+                       TextColor="#666666"
+                       Margin="0,0,0,8" />
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Start">
+                    <Button Text="-"
+                            Command="{Binding DecrementLongBreakCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Border BackgroundColor="#F8F8F8"
+                            StrokeThickness="1"
+                            Stroke="#DDDDDD"
+                            StrokeShape="RoundRectangle 8"
+                            Padding="15,0">
+                        <Entry Text="{Binding LongBreakMinutes}"
+                               Keyboard="Numeric"
+                               HorizontalTextAlignment="Center"
+                               FontSize="24"
+                               TextColor="#222222"
+                               WidthRequest="100"
+                               HeightRequest="45"
+                               BackgroundColor="Transparent" />
+                    </Border>
+                    <Button Text="+"
+                            Command="{Binding IncrementLongBreakCommand}"
+                            WidthRequest="45"
+                            HeightRequest="45"
+                            FontSize="20"
+                            BackgroundColor="#EEEEEE"
+                            TextColor="#333333"
+                            CornerRadius="8"
+                            BorderWidth="0" />
+                    <Label Text="minutos"
+                           FontSize="14"
+                           TextColor="#666666"
+                           VerticalOptions="Center"
+                           Margin="8,0,0,0" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <Label Text="Valores permitidos: 1 a 60 minutos"
+                   FontSize="12"
+                   TextColor="#999999"
+                   HorizontalOptions="Start"
+                   Margin="0,15,0,0" />
+
+            <Button Text="Salvar"
+                    Command="{Binding SaveCommand}"
+                    FontSize="16"
+                    BackgroundColor="#4A90E2"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    WidthRequest="200"
+                    HorizontalOptions="Start"
+                    Margin="0,20,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
