@@ -14,7 +14,7 @@ public static class AchievementDebugHelper
         if (achievementService is not null)
         {
             await achievementService.ResetAllAchievements();
-            System.Diagnostics.Debug.WriteLine("✅ Conquistas resetadas com sucesso!");
+            System.Diagnostics.Debug.WriteLine("Conquistas resetadas com sucesso!");
         }
     }
 
@@ -27,7 +27,7 @@ public static class AchievementDebugHelper
         if (achievementService is not null)
         {
             await achievementService.DeleteDatabase();
-            System.Diagnostics.Debug.WriteLine("✅ Banco de dados deletado com sucesso!");
+            System.Diagnostics.Debug.WriteLine("Banco de dados deletado com sucesso!");
         }
     }
 
@@ -40,7 +40,7 @@ public static class AchievementDebugHelper
         if (achievementService is not null)
         {
             await achievementService.ResetDatabase();
-            System.Diagnostics.Debug.WriteLine("✅ Banco de dados resetado com sucesso!");
+            System.Diagnostics.Debug.WriteLine("Banco de dados resetado com sucesso!");
         }
     }
 

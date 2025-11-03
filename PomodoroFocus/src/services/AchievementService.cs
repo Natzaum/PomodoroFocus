@@ -131,7 +131,7 @@ public class AchievementService
                 // Notifica sobre a conquista desbloqueada
                 _notificationService.NotifyAchievementUnlocked(achievement);
                 
-                System.Diagnostics.Debug.WriteLine($"🏆 Conquista desbloqueada: {achievement.Title}");
+                System.Diagnostics.Debug.WriteLine($"Conquista desbloqueada: {achievement.Title}");
             }
         }
     }
@@ -171,7 +171,7 @@ public class AchievementService
             }
             
             _completedPomodoros = 0;
-            System.Diagnostics.Debug.WriteLine("🔄 Todas as conquistas foram resetadas!");
+            System.Diagnostics.Debug.WriteLine("Todas as conquistas foram resetadas!");
         }
         catch (Exception ex)
         {
@@ -196,7 +196,7 @@ public class AchievementService
             if (File.Exists(_dbPath))
             {
                 File.Delete(_dbPath);
-                System.Diagnostics.Debug.WriteLine("🗑️ Banco de dados de conquistas deletado!");
+                System.Diagnostics.Debug.WriteLine("Banco de dados de conquistas deletado!");
             }
 
             _completedPomodoros = 0;
@@ -215,6 +215,6 @@ public class AchievementService
     {
         await DeleteDatabase();
         await InitializeDatabase();
-        System.Diagnostics.Debug.WriteLine("🔄 Banco de dados resetado com sucesso!");
+        System.Diagnostics.Debug.WriteLine("Banco de dados resetado com sucesso!");
     }
 }

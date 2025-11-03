@@ -13,7 +13,7 @@
             <Label
                 FontSize="28"
                 FontAttributes="Bold"
-                Text="🏆 Suas Conquistas"
+                Text="Suas Conquistas"
                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
 
             <Grid ColumnDefinitions="*,*" ColumnSpacing="15">

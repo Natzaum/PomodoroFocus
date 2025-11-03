@@ -28,7 +28,7 @@ public class AchievementNotificationService
             // Dispara o evento
             AchievementUnlocked?.Invoke(this, new AchievementUnlockedEventArgs(achievement));
 
-            System.Diagnostics.Debug.WriteLine($"🏆 Notificação de conquista: {achievement.Title}");
+            System.Diagnostics.Debug.WriteLine($"Notificação de conquista: {achievement.Title}");
         }
         catch (Exception ex)
         {
