@@ -8,16 +8,18 @@ public class PomodoroService
     private int _secondsRemaining;
     private readonly AchievementService _achievements;
     private readonly SettingsService _settingsService;
+    private readonly SoundService _soundService;
     private int _completedPomodoros = 0;
     private const int POMODOROS_UNTIL_LONG_BREAK = 4;
 
     public int CompletedPomodoros => _completedPomodoros;
     public int PomodorosUntilLongBreak => POMODOROS_UNTIL_LONG_BREAK;
 
-    public PomodoroService(AchievementService achievements, SettingsService settingsService)
+    public PomodoroService(AchievementService achievements, SettingsService settingsService, SoundService soundService)
     {
         _achievements = achievements;
         _settingsService = settingsService;
+        _soundService = soundService;
     }
 
     private int GetFocusTime() => _settingsService.GetFocusSeconds();
@@ -48,6 +50,7 @@ public class PomodoroService
             
             MainThread.BeginInvokeOnMainThread(() =>
             {
+                _soundService.PlayNotificationSound();
                 PrepareNextState(vm, incrementCounter: true);
                 vm.IsRunning = false;
             });
