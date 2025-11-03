@@ -11,6 +11,8 @@
             </ResourceDictionary.MergedDictionaries>
             <local:InverseBoolConverter x:Key="InverseBoolConverter" />
             <local:ColorResourceConverter x:Key="ColorResourceConverter" />
+            <local:BoolToColorConverter x:Key="BoolToColor" />
+            <local:BoolToOpacityConverter x:Key="BoolToOpacity" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -24,6 +24,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<SoundService>();
 		builder.Services.AddSingleton<HomeViewModel>();
 		builder.Services.AddSingleton<SettingsViewModel>();
+		builder.Services.AddSingleton<AchievementsViewModel>();
+		builder.Services.AddSingleton<AchievementsPage>();
 
 #if DEBUG
 			builder.Logging.AddDebug();

@@ -67,7 +67,7 @@ public class PomodoroService
             if (incrementCounter)
             {
                 _completedPomodoros++;
-                _achievements.IncrementPomodoro();
+                MainThread.BeginInvokeOnMainThread(async () => await _achievements.IncrementPomodoro());
                 System.Diagnostics.Debug.WriteLine($"Pomodoro completado! Total: {_completedPomodoros}");
             }
 

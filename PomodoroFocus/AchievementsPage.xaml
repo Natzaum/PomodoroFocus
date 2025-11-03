@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PomodoroFocus.AchievementsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Conquistas"
+    BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}">
+
+    <Grid RowDefinitions="auto,*" Padding="20" RowSpacing="20">
+        
+        <!-- Header com estatísticas -->
+        <VerticalStackLayout Spacing="15">
+            <Label
+                FontSize="28"
+                FontAttributes="Bold"
+                Text="🏆 Suas Conquistas"
+                TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                <!-- Card: Total de Pomodoros -->
+                <Frame
+                    Padding="15"
+                    BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                    CornerRadius="10"
+                    HasShadow="True">
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            FontSize="14"
+                            Text="Pomodoros"
+                            TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            Text="{Binding TotalPomodoros}"
+                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Card: Conquistas Desbloqueadas -->
+                <Frame
+                    Grid.Column="1"
+                    Padding="15"
+                    BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#333333}"
+                    CornerRadius="10"
+                    HasShadow="True">
+                    <VerticalStackLayout Spacing="5">
+                        <Label
+                            FontSize="14"
+                            Text="Desbloqueadas"
+                            TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                        <Label
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            Text="{Binding UnlockedCount, StringFormat='{0} / 5'}"
+                            TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+        </VerticalStackLayout>
+
+        <!-- Lista de Conquistas -->
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding Achievements}"
+            SelectionMode="None">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Padding="15"
+                        BorderColor="{Binding Unlocked, Converter={StaticResource BoolToColor}}"
+                        CornerRadius="10"
+                        HasShadow="True"
+                        Opacity="{Binding Unlocked, Converter={StaticResource BoolToOpacity}}">
+                        <Grid ColumnDefinitions="auto,*,auto" ColumnSpacing="15" VerticalOptions="Center">
+                            
+                            <!-- Ícone de Status -->
+                            <Label
+                                Grid.Column="0"
+                                FontSize="28"
+                                Text="{Binding Unlocked, StringFormat='{0:★,☆}'}"
+                                VerticalOptions="Center" />
+
+                            <!-- Informações -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                <Label
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    Text="{Binding Title}"
+                                    TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                                <Label
+                                    FontSize="12"
+                                    Text="{Binding Description}"
+                                    TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}" />
+                            </VerticalStackLayout>
+
+                            <!-- Data de Desbloqueio -->
+                            <Label
+                                Grid.Column="2"
+                                FontSize="11"
+                                Text="{Binding UnlockedAt, StringFormat='{0:dd/MM/yyyy}'}"
+                                TextColor="{AppThemeBinding Light=#888888, Dark=#999999}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Loading Indicator -->
+        <ActivityIndicator
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            VerticalOptions="Center"
+            Color="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+    </Grid>
+</ContentPage>

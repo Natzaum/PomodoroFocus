@@ -18,4 +18,9 @@
             Route="SettingsPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Conquistas" Icon="dotnet_bot.png">
+        <ShellContent
+            ContentTemplate="{DataTemplate local:AchievementsPage}"
+            Route="AchievementsPage" />
+    </FlyoutItem>
 </Shell>
