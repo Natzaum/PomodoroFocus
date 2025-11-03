@@ -26,10 +26,13 @@ public static class MauiProgram
 		builder.Services.AddSingleton<AchievementNotificationService>();
 		builder.Services.AddSingleton<AchievementService>();
 		builder.Services.AddSingleton<PomodoroService>();
+		builder.Services.AddSingleton<TaskService>();
 		builder.Services.AddSingleton<HomeViewModel>();
 		builder.Services.AddSingleton<SettingsViewModel>();
 		builder.Services.AddSingleton<AchievementsViewModel>();
+		builder.Services.AddSingleton<TasksViewModel>();
 		builder.Services.AddSingleton<AchievementsPage>();
+		builder.Services.AddSingleton<TasksPage>();
 
 #if DEBUG
 			builder.Logging.AddDebug();

@@ -1,4 +1,5 @@
 using SQLite;
+using System.Threading.Tasks;
 
 namespace PomodoroFocus;
 
@@ -16,7 +17,7 @@ public class AchievementService
         _dbPath = Path.Combine(FileSystem.AppDataDirectory, _dbFileName);
     }
 
-    private async Task InitializeDatabase()
+    private async global::System.Threading.Tasks.Task InitializeDatabase()
     {
         if (_database is not null)
             return;
@@ -35,7 +36,7 @@ public class AchievementService
         await LoadCompletedPomodoros();
     }
 
-    private async Task SeedInitialAchievements()
+    private async global::System.Threading.Tasks.Task SeedInitialAchievements()
     {
         var achievements = new List<Achievements>
         {
@@ -82,7 +83,7 @@ public class AchievementService
         }
     }
 
-    private async Task LoadCompletedPomodoros()
+    private async global::System.Threading.Tasks.Task LoadCompletedPomodoros()
     {
         var unlockedAchievements = await _database!
             .Table<Achievements>()
@@ -97,7 +98,7 @@ public class AchievementService
             .Max();
     }
 
-    public async Task IncrementPomodoro()
+    public async global::System.Threading.Tasks.Task IncrementPomodoro()
     {
         if (_database is null)
             await InitializeDatabase();
@@ -106,7 +107,7 @@ public class AchievementService
         await CheckAchievements();
     }
 
-    private async Task CheckAchievements()
+    private async global::System.Threading.Tasks.Task CheckAchievements()
     {
         var unlockedAchievements = await _database!.Table<Achievements>().Where(a => !a.Unlocked).ToListAsync();
 
@@ -136,7 +137,7 @@ public class AchievementService
         }
     }
 
-    public async Task<List<Achievements>> GetAchievements()
+    public async global::System.Threading.Tasks.Task<List<Achievements>> GetAchievements()
     {
         if (_database is null)
             await InitializeDatabase();
@@ -144,7 +145,7 @@ public class AchievementService
         return await _database!.Table<Achievements>().ToListAsync();
     }
 
-    public async Task<int> GetCompletedPomodoros()
+    public async global::System.Threading.Tasks.Task<int> GetCompletedPomodoros()
     {
         if (_database is null)
             await InitializeDatabase();
@@ -155,7 +156,7 @@ public class AchievementService
     /// <summary>
     /// Reseta todas as conquistas, marcando-as como desbloqueadas
     /// </summary>
-    public async Task ResetAllAchievements()
+    public async global::System.Threading.Tasks.Task ResetAllAchievements()
     {
         if (_database is null)
             await InitializeDatabase();
@@ -183,7 +184,7 @@ public class AchievementService
     /// <summary>
     /// Deleta o banco de dados completo de conquistas
     /// </summary>
-    public async Task DeleteDatabase()
+    public async global::System.Threading.Tasks.Task DeleteDatabase()
     {
         try
         {
@@ -211,7 +212,7 @@ public class AchievementService
     /// <summary>
     /// Reseta o banco de dados e reinicializa com conquistas padrão
     /// </summary>
-    public async Task ResetDatabase()
+    public async global::System.Threading.Tasks.Task ResetDatabase()
     {
         await DeleteDatabase();
         await InitializeDatabase();

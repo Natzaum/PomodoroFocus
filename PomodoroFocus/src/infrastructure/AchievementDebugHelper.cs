@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace PomodoroFocus;
 
 /// <summary>
@@ -8,7 +10,7 @@ public static class AchievementDebugHelper
     /// <summary>
     /// Reseta todas as conquistas (marca como não desbloqueadas)
     /// </summary>
-    public static async Task ResetAllAchievements()
+    public static async global::System.Threading.Tasks.Task ResetAllAchievements()
     {
         var achievementService = ServiceHelper.GetService<AchievementService>();
         if (achievementService is not null)
@@ -21,7 +23,7 @@ public static class AchievementDebugHelper
     /// <summary>
     /// Deleta completamente o banco de dados de conquistas
     /// </summary>
-    public static async Task DeleteAchievementDatabase()
+    public static async global::System.Threading.Tasks.Task DeleteAchievementDatabase()
     {
         var achievementService = ServiceHelper.GetService<AchievementService>();
         if (achievementService is not null)
@@ -34,7 +36,7 @@ public static class AchievementDebugHelper
     /// <summary>
     /// Reseta o banco de dados completamente e reinicializa com dados padrão
     /// </summary>
-    public static async Task ResetAchievementDatabase()
+    public static async global::System.Threading.Tasks.Task ResetAchievementDatabase()
     {
         var achievementService = ServiceHelper.GetService<AchievementService>();
         if (achievementService is not null)
@@ -56,7 +58,7 @@ public static class AchievementDebugHelper
             "resetachievements" => ResetAllAchievements(),
             "deleteachievementdb" => DeleteAchievementDatabase(),
             "resetachievementdb" => ResetAchievementDatabase(),
-            _ => Task.CompletedTask
+            _ => global::System.Threading.Tasks.Task.CompletedTask
         };
 
         task.Wait();

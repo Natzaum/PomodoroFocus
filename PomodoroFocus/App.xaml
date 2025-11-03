@@ -13,6 +13,7 @@
             <local:ColorResourceConverter x:Key="ColorResourceConverter" />
             <local:BoolToColorConverter x:Key="BoolToColor" />
             <local:BoolToOpacityConverter x:Key="BoolToOpacity" />
+            <local:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

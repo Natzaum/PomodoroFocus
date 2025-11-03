@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace PomodoroFocus;
 
 public class SoundService
@@ -26,7 +28,7 @@ public class SoundService
         try
         {
 #if WINDOWS
-            Task.Run(() =>
+            global::System.Threading.Tasks.Task.Run(() =>
             {
                 var soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, soundFileName);
                 if (System.IO.File.Exists(soundPath))

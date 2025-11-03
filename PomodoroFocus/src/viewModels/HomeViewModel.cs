@@ -1,4 +1,5 @@
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace PomodoroFocus;
 
@@ -177,7 +178,7 @@ public class HomeViewModel : BaseViewModel
     private async void AnimateButtonPress()
     {
         ButtonOpacity = 0.5;
-        await Task.Delay(100);
+        await global::System.Threading.Tasks.Task.Delay(100);
         ButtonOpacity = 1.0;
     }
 }

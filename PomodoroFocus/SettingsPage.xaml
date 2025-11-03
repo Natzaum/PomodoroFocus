@@ -171,22 +171,6 @@
                    HorizontalOptions="Start"
                    Margin="0,0,0,10" />
 
-            <Button Text="Resetar Todas as Conquistas"
-                    Command="{Binding ResetAchievementsCommand}"
-                    FontSize="14"
-                    BackgroundColor="#E27A4A"
-                    TextColor="White"
-                    CornerRadius="8"
-                    HeightRequest="45"
-                    HorizontalOptions="Start"
-                    Margin="0,0,0,0" />
-
-            <Label Text="Remove todas as conquistas desbloqueadas (não deleta dados de pomodoros)"
-                   FontSize="11"
-                   TextColor="#999999"
-                   HorizontalOptions="Start"
-                   Margin="0,8,0,0" />
-
             <BoxView HeightRequest="1"
                      BackgroundColor="#EEEEEE"
                      Margin="0,30,0,30" />
@@ -253,7 +237,23 @@
                      BackgroundColor="#EEEEEE"
                      Margin="0,30,0,30" />
 
-            <!-- Botão Salvar no final -->
+            <!-- Botão Resetar Conquistas e Salvar no final -->
+            <Button Text="Resetar Todas as Conquistas"
+                    Command="{Binding ResetAchievementsCommand}"
+                    FontSize="14"
+                    BackgroundColor="#E27A4A"
+                    TextColor="White"
+                    CornerRadius="8"
+                    HeightRequest="45"
+                    HorizontalOptions="Fill"
+                    Margin="0,0,0,8" />
+
+            <Label Text="Remove todas as conquistas desbloqueadas (não deleta dados de pomodoros)"
+                   FontSize="11"
+                   TextColor="#999999"
+                   HorizontalOptions="Start"
+                   Margin="0,0,0,20" />
+
             <Button Text="Salvar Configurações"
                     Command="{Binding SaveCommand}"
                     FontSize="16"

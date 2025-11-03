@@ -53,7 +53,7 @@ public class AchievementsViewModel : BaseViewModel
         _achievementService = ServiceHelper.GetService<AchievementService>()!;
     }
 
-    public async Task LoadAchievements()
+    public async global::System.Threading.Tasks.Task LoadAchievements()
     {
         try
         {
