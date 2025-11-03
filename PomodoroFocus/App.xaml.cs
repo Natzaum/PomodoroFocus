@@ -12,6 +12,9 @@ public partial class App : Application
             InitializeComponent();
             System.Diagnostics.Debug.WriteLine("App InitializeComponent completed");
 
+            // Inicializa tema e esquema de cores
+            InitializeAppearance();
+
             Microsoft.Maui.Handlers.WindowHandler.Mapper.AppendToMapping(
                 nameof(IWindow),
                 (handler, view) =>
@@ -50,6 +53,29 @@ public partial class App : Application
             System.Diagnostics.Debug.WriteLine($"Error creating window: {ex}");
             System.IO.File.WriteAllText(Path.Combine(FileSystem.AppDataDirectory, "window_error.log"), ex.ToString());
             throw;
+        }
+    }
+
+    private void InitializeAppearance()
+    {
+        try
+        {
+            var themeService = ServiceHelper.GetService<ThemeService>();
+            var colorSchemeService = ServiceHelper.GetService<ColorSchemeService>();
+
+            if (themeService is not null)
+            {
+                System.Diagnostics.Debug.WriteLine("✨ Tema inicializado");
+            }
+
+            if (colorSchemeService is not null)
+            {
+                System.Diagnostics.Debug.WriteLine("🎨 Esquema de cores inicializado");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Erro ao inicializar tema: {ex}");
         }
     }
 }

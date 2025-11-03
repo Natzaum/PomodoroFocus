@@ -20,6 +20,9 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<SettingsService>();
 		builder.Services.AddSingleton<SoundService>();
+		builder.Services.AddSingleton<ThemeService>();
+		builder.Services.AddSingleton<ColorSchemeService>();
+		builder.Services.AddSingleton<SoundCustomizationService>();
 		builder.Services.AddSingleton<AchievementNotificationService>();
 		builder.Services.AddSingleton<AchievementService>();
 		builder.Services.AddSingleton<PomodoroService>();
