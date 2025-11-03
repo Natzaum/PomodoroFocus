@@ -5,6 +5,7 @@ namespace PomodoroFocus;
 public class SettingsViewModel : BaseViewModel
 {
     private readonly SettingsService _settingsService;
+    private readonly AchievementService _achievementService;
     private int _focusMinutes;
     private int _shortBreakMinutes;
     private int _longBreakMinutes;
@@ -49,10 +50,12 @@ public class SettingsViewModel : BaseViewModel
     public ICommand DecrementShortBreakCommand { get; }
     public ICommand IncrementLongBreakCommand { get; }
     public ICommand DecrementLongBreakCommand { get; }
+    public ICommand ResetAchievementsCommand { get; }
 
     public SettingsViewModel(SettingsService settingsService)
     {
         _settingsService = settingsService;
+        _achievementService = ServiceHelper.GetService<AchievementService>()!;
         var settings = _settingsService.GetSettings();
         _focusMinutes = settings.FocusMinutes;
         _shortBreakMinutes = settings.ShortBreakMinutes;
@@ -64,6 +67,7 @@ public class SettingsViewModel : BaseViewModel
         DecrementShortBreakCommand = new Command(() => ShortBreakMinutes--);
         IncrementLongBreakCommand = new Command(() => LongBreakMinutes++);
         DecrementLongBreakCommand = new Command(() => LongBreakMinutes--);
+        ResetAchievementsCommand = new Command(ResetAchievements);
     }
 
     private async void SaveSettings()
@@ -78,6 +82,37 @@ public class SettingsViewModel : BaseViewModel
         if (Application.Current?.Windows.Count > 0)
         {
             await Application.Current.Windows[0].Page!.DisplayAlert("Sucesso", "Configurações salvas!", "OK");
+        }
+    }
+
+    private async void ResetAchievements()
+    {
+        if (Application.Current?.Windows.Count > 0)
+        {
+            var result = await Application.Current.Windows[0].Page!.DisplayAlert(
+                "Resetar Conquistas",
+                "Tem certeza que deseja resetar todas as conquistas desbloqueadas?",
+                "Sim",
+                "Não");
+
+            if (result)
+            {
+                try
+                {
+                    await _achievementService.ResetAllAchievements();
+                    await Application.Current.Windows[0].Page!.DisplayAlert(
+                        "Sucesso",
+                        "Todas as conquistas foram resetadas!",
+                        "OK");
+                }
+                catch (Exception ex)
+                {
+                    await Application.Current.Windows[0].Page!.DisplayAlert(
+                        "Erro",
+                        $"Erro ao resetar conquistas: {ex.Message}",
+                        "OK");
+                }
+            }
         }
     }
 }

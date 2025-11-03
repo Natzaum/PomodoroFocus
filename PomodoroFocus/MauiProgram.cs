@@ -19,9 +19,10 @@ public static class MauiProgram
 				});
 
 		builder.Services.AddSingleton<SettingsService>();
+		builder.Services.AddSingleton<SoundService>();
+		builder.Services.AddSingleton<AchievementNotificationService>();
 		builder.Services.AddSingleton<AchievementService>();
 		builder.Services.AddSingleton<PomodoroService>();
-		builder.Services.AddSingleton<SoundService>();
 		builder.Services.AddSingleton<HomeViewModel>();
 		builder.Services.AddSingleton<SettingsViewModel>();
 		builder.Services.AddSingleton<AchievementsViewModel>();

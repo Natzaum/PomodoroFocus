@@ -4,6 +4,7 @@ public class SoundService
 {
     private const string ClickSoundPath = "tap_click.wav";
     private const string NotificationSoundPath = "notif_time.wav";
+    private const string AchievementSoundPath = "achievement_notif.wav";
 
     public void PlayClickSound()
     {
@@ -13,6 +14,11 @@ public class SoundService
     public void PlayNotificationSound()
     {
         PlaySound(NotificationSoundPath);
+    }
+
+    public void PlayAchievementSound()
+    {
+        PlaySound(AchievementSoundPath);
     }
 
     private void PlaySound(string soundFileName)

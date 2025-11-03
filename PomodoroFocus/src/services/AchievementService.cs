@@ -8,9 +8,11 @@ public class AchievementService
     private string _dbPath;
     private int _completedPomodoros = 0;
     private readonly string _dbFileName = "pomodorofocus.db3";
+    private readonly AchievementNotificationService _notificationService;
 
-    public AchievementService()
+    public AchievementService(AchievementNotificationService notificationService)
     {
+        _notificationService = notificationService;
         _dbPath = Path.Combine(FileSystem.AppDataDirectory, _dbFileName);
     }
 
@@ -125,6 +127,10 @@ public class AchievementService
                 achievement.Unlocked = true;
                 achievement.UnlockedAt = DateTime.Now;
                 await _database!.UpdateAsync(achievement);
+                
+                // Notifica sobre a conquista desbloqueada
+                _notificationService.NotifyAchievementUnlocked(achievement);
+                
                 System.Diagnostics.Debug.WriteLine($"🏆 Conquista desbloqueada: {achievement.Title}");
             }
         }
@@ -144,5 +150,71 @@ public class AchievementService
             await InitializeDatabase();
 
         return _completedPomodoros;
+    }
+
+    /// <summary>
+    /// Reseta todas as conquistas, marcando-as como desbloqueadas
+    /// </summary>
+    public async Task ResetAllAchievements()
+    {
+        if (_database is null)
+            await InitializeDatabase();
+
+        try
+        {
+            var achievements = await _database!.Table<Achievements>().ToListAsync();
+            foreach (var achievement in achievements)
+            {
+                achievement.Unlocked = false;
+                achievement.UnlockedAt = null;
+                await _database!.UpdateAsync(achievement);
+            }
+            
+            _completedPomodoros = 0;
+            System.Diagnostics.Debug.WriteLine("🔄 Todas as conquistas foram resetadas!");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Erro ao resetar conquistas: {ex}");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Deleta o banco de dados completo de conquistas
+    /// </summary>
+    public async Task DeleteDatabase()
+    {
+        try
+        {
+            if (_database is not null)
+            {
+                _database.CloseAsync().Wait();
+                _database = null;
+            }
+
+            if (File.Exists(_dbPath))
+            {
+                File.Delete(_dbPath);
+                System.Diagnostics.Debug.WriteLine("🗑️ Banco de dados de conquistas deletado!");
+            }
+
+            _completedPomodoros = 0;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Erro ao deletar banco de dados: {ex}");
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Reseta o banco de dados e reinicializa com conquistas padrão
+    /// </summary>
+    public async Task ResetDatabase()
+    {
+        await DeleteDatabase();
+        await InitializeDatabase();
+        System.Diagnostics.Debug.WriteLine("🔄 Banco de dados resetado com sucesso!");
     }
 }
