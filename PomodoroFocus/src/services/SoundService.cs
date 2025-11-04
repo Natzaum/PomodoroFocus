@@ -10,7 +10,7 @@ public class SoundService
 
     public void PlayClickSound()
     {
-        PlaySound(ClickSoundPath);
+      PlaySound(ClickSoundPath);
     }
 
     public void PlayNotificationSound()
@@ -26,63 +26,74 @@ public class SoundService
     private void PlaySound(string soundFileName)
     {
         try
-        {
+  {
 #if WINDOWS
             global::System.Threading.Tasks.Task.Run(() =>
             {
-                var soundPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, soundFileName);
-                if (System.IO.File.Exists(soundPath))
-                {
-                    using (var player = new System.Media.SoundPlayer(soundPath))
-                    {
-                        player.PlaySync();
-                    }
+       var soundPath = System.IO.Path.Combine(AppContext.BaseDirectory, "Resources", "Raw", soundFileName);
+           if (System.IO.File.Exists(soundPath))
+       {
+          using (var player = new System.Media.SoundPlayer(soundPath))
+     {
+            player.PlaySync();
+           }
+   }
+        else
+{
+          System.Diagnostics.Debug.WriteLine($"Som não encontrado em: {soundPath}");
                 }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine($"Som não encontrado: {soundPath}");
-                }
-            });
+      });
 #elif ANDROID
-            Task.Run(() => PlaySoundAndroid(soundFileName));
+            global::System.Threading.Tasks.Task.Run(() => PlaySoundAndroid(soundFileName));
 #endif
         }
         catch (Exception ex)
-        {
+{
             System.Diagnostics.Debug.WriteLine($"Erro ao tocar som {soundFileName}: {ex.Message}");
-        }
-    }
+      }
+}
 
 #if ANDROID
-    private void PlaySoundAndroid(string soundFileName)
+  private void PlaySoundAndroid(string soundFileName)
     {
+        Android.Media.MediaPlayer mediaPlayer = null;
         try
-        {
-            var context = Android.App.Application.Context;
-            var resourceName = soundFileName.Replace(".wav", "").Replace("-", "_");
-            var resourceId = context.Resources.GetIdentifier(
-                resourceName,
-                "raw",
-                context.PackageName);
+  {
+ var context = Android.App.Application.Context;
+    var resourceName = soundFileName.Replace(".wav", "");
+        var resourceId = context.Resources.GetIdentifier(
+     resourceName,
+   "raw",
+  context.PackageName);
 
-            if (resourceId != 0)
-            {
-                var mediaPlayer = new Android.Media.MediaPlayer();
-                var afd = context.Resources.OpenRawResourceFd(resourceId);
-                mediaPlayer.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);
-                afd.Close();
-                mediaPlayer.Prepare();
-                mediaPlayer.Start();
+      if (resourceId != 0)
+     {
+        mediaPlayer = new Android.Media.MediaPlayer();
+ var afd = context.Resources.OpenRawResourceFd(resourceId);
+       mediaPlayer.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);
+    afd.Close();
+     mediaPlayer.Prepare();
+         
+      // Liberar recursos ao terminar
+    mediaPlayer.Completion += (sender, e) =>
+ {
+    mediaPlayer?.Release();
+            mediaPlayer?.Dispose();
+        };
+        
+    mediaPlayer.Start();
+    }
+     else
+   {
+ System.Diagnostics.Debug.WriteLine($"Recurso de áudio não encontrado: {resourceName} (ID: {resourceId}) - Recurso esperado no pacote {context.PackageName}");
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine($"Recurso de áudio não encontrado: {resourceName}");
-            }
-        }
+    }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Erro ao tocar som Android: {ex.Message}");
-        }
+System.Diagnostics.Debug.WriteLine($"Erro ao tocar som Android: {ex.Message}");
+     mediaPlayer?.Release();
+  mediaPlayer?.Dispose();
+      }
     }
 #endif
 }
