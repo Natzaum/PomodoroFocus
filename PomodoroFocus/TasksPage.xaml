@@ -14,7 +14,7 @@
             <Label
                 FontSize="28"
                 FontAttributes="Bold"
-                Text="📋 Suas Tarefas"
+                Text="Suas Tarefas"
                 TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
 
             <!-- Estatísticas em Cards -->
@@ -104,7 +104,7 @@
                 <Label
                     FontSize="14"
                     FontAttributes="Bold"
-                    Text="➕ Nova Tarefa"
+                    Text="Nova Tarefa"
                     TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
 
                 <Entry
@@ -198,7 +198,7 @@
                                 Spacing="8"
                                 HorizontalOptions="End">
                                 <Button
-                                    Text="▶️"
+                                    Text="Start"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksPage}}, Path=BindingContext.StartTaskCommand}"
                                     CommandParameter="{Binding .}"
                                     FontSize="12"
@@ -211,7 +211,7 @@
                                     IsVisible="{Binding Status, Converter={StaticResource StatusToVisibilityConverter}}" />
 
                                 <Button
-                                    Text="✓"
+                                    Text="Complete"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksPage}}, Path=BindingContext.CompleteTaskCommand}"
                                     CommandParameter="{Binding .}"
                                     FontSize="14"
@@ -223,7 +223,7 @@
                                     HeightRequest="35" />
 
                                 <Button
-                                    Text="🔄"
+                                    Text="Reset"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksPage}}, Path=BindingContext.ResetTaskCommand}"
                                     CommandParameter="{Binding .}"
                                     FontSize="12"
@@ -235,7 +235,7 @@
                                     HeightRequest="35" />
 
                                 <Button
-                                    Text="✕"
+                                    Text="Delete"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksPage}}, Path=BindingContext.DeleteTaskCommand}"
                                     CommandParameter="{Binding .}"
                                     FontSize="14"

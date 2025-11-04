@@ -25,7 +25,7 @@ public class TaskService
 
         _database = new SQLiteAsyncConnection(_dbPath);
         await _database.CreateTableAsync<Task>();
-        System.Diagnostics.Debug.WriteLine("✅ Banco de dados de tasks inicializado");
+        System.Diagnostics.Debug.WriteLine("Banco de dados de tasks inicializado");
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ public class TaskService
 
         task.CreatedAt = DateTime.Now;
         int id = await _database!.InsertAsync(task);
-        System.Diagnostics.Debug.WriteLine($"✅ Task criada: {task.Title} (ID: {id})");
+        System.Diagnostics.Debug.WriteLine($"Task criada: {task.Title} (ID: {id})");
         return id;
     }
 
@@ -84,7 +84,7 @@ public class TaskService
             await InitializeDatabase();
 
         await _database!.UpdateAsync(task);
-        System.Diagnostics.Debug.WriteLine($"✅ Task atualizada: {task.Title}");
+        System.Diagnostics.Debug.WriteLine($"Task atualizada: {task.Title}");
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class TaskService
             await InitializeDatabase();
 
         await _database!.DeleteAsync<Task>(id);
-        System.Diagnostics.Debug.WriteLine($"✅ Task deletada (ID: {id})");
+        System.Diagnostics.Debug.WriteLine($"Task deletada (ID: {id})");
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class TaskService
             task.Status = TaskStatus.Done;
             task.CompletedAt = DateTime.Now;
             await UpdateTask(task);
-            System.Diagnostics.Debug.WriteLine($"✅ Task concluída: {task.Title}");
+            System.Diagnostics.Debug.WriteLine($"Task concluída: {task.Title}");
         }
     }
 
@@ -124,7 +124,7 @@ public class TaskService
         {
             task.Status = TaskStatus.InProgress;
             await UpdateTask(task);
-            System.Diagnostics.Debug.WriteLine($"▶️ Task iniciada: {task.Title}");
+            System.Diagnostics.Debug.WriteLine($"Task iniciada: {task.Title}");
         }
     }
 
@@ -137,9 +137,9 @@ public class TaskService
         if (task is not null)
         {
             task.Status = TaskStatus.Todo;
-            task.CompletedAt = null;
+            task.CompletedPomodorCount = 0;
             await UpdateTask(task);
-            System.Diagnostics.Debug.WriteLine($"🔄 Task resetada: {task.Title}");
+            System.Diagnostics.Debug.WriteLine($"Task resetada: {task.Title}");
         }
     }
 
@@ -153,7 +153,7 @@ public class TaskService
         {
             task.CompletedPomodorCount++;
             await UpdateTask(task);
-            System.Diagnostics.Debug.WriteLine($"🍅 Pomodoro adicionado à task: {task.Title} ({task.CompletedPomodorCount}/{task.PomodorCount})");
+            System.Diagnostics.Debug.WriteLine($"Pomodoro adicionado à task: {task.Title} ({task.CompletedPomodorCount}/{task.PomodorCount})");
         }
     }
 
@@ -166,7 +166,7 @@ public class TaskService
             await InitializeDatabase();
 
         await _database!.DeleteAllAsync<Task>();
-        System.Diagnostics.Debug.WriteLine("🗑️ Todas as tasks foram deletadas");
+        System.Diagnostics.Debug.WriteLine("Todas as tasks foram deletadas");
     }
 
     /// <summary>
